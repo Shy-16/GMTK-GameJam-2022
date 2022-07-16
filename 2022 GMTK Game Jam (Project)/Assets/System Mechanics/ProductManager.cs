@@ -2,24 +2,23 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour
+public class ProductManager : MonoBehaviour
 {
     //--------------------------------------------------
     // Properties
     //--------------------------------------------------
-    public static ResourceManager _instance;
-    public int resources = 0;
+    public static ProductManager _isntance;
+    public List<Product> finishedProducts = new();
 
     //--------------------------------------------------
     // Initialization
     //--------------------------------------------------
     void Awake()
     {
-        _instance = this;
+        _isntance = this;
     }
 
     //--------------------------------------------------
     // Methods
     //--------------------------------------------------
-
 }

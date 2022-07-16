@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
@@ -8,7 +8,8 @@ public abstract class Unit : MonoBehaviour
     // Properties
     //--------------------------------------------------
     public Die die;
-    public Workplace workplace;
+    public virtual Workplace Workplace { get; set; }
+    public Workplace workplaceObj;
     public Vector2 stagingLocation = Vector2.zero;
     public string unitName;
 
@@ -74,9 +75,9 @@ public abstract class Unit : MonoBehaviour
 
         while (!atWork)
         {
-            transform.position = Vector3.MoveTowards(transform.position, workplace.transform.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, Workplace.transform.position, speed);
 
-            if (Vector2.Distance(workplace.transform.position, transform.position) == 0)
+            if (Vector2.Distance(Workplace.transform.position, transform.position) <= 0.5f)
                 atWork = true;
 
             yield return 0;

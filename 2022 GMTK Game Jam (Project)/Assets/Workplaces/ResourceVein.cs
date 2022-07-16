@@ -1,13 +1,14 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Workplace : MonoBehaviour
+public class ResourceVein : Workplace
 {
     //--------------------------------------------------
     // Properties
     //--------------------------------------------------
-
+    public ResourceType resourceType;
+    public int resourcesRemaining = 1000;
 
     //--------------------------------------------------
     // Methods
