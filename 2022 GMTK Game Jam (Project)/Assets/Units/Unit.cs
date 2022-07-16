@@ -2,13 +2,17 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
 {
     //--------------------------------------------------
     // Properties
     //--------------------------------------------------
     public Die die;
     public virtual Workplace Workplace { get; set; }
+    public bool Selected { get; set; }
+    public I_Draggable SlottedObject { get; set; }
+    public LayerMask Mask { get; set; }
+
     public Workplace workplaceObj;
     public Vector2 stagingLocation = Vector2.zero;
     public string unitName;
@@ -19,12 +23,14 @@ public abstract class Unit : MonoBehaviour
     private float speed = 0.02f;
 
     //--------------------------------------------------
-    // Initialization
+    // Initializations
     //--------------------------------------------------
-    void Start()
+    protected virtual void Start()
     {
-
+        Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
+        //Debug.Log(Mask.value, this);
     }
+
 
     //--------------------------------------------------
     // Updates
@@ -71,7 +77,7 @@ public abstract class Unit : MonoBehaviour
 
     protected IEnumerator GoToWorkplace()
     {
-        Debug.Log("I am leaving for work");
+        Debug.Log("<i>I am leaving for work</i>");
 
         while (!atWork)
         {
@@ -83,13 +89,13 @@ public abstract class Unit : MonoBehaviour
             yield return 0;
         }
 
-        Debug.Log("I have arrived at work.", this);
+        Debug.Log("<i>I have arrived at work.</i>", this);
     }
 
     protected IEnumerator LeaveWorkplace()
     {
         atWork = false;
-        Debug.Log("I am leaving work.", this);
+        Debug.Log("<i>I am leaving work.</i>", this);
 
         while (Vector2.Distance(stagingLocation, transform.position) > 0)
         {
@@ -98,6 +104,37 @@ public abstract class Unit : MonoBehaviour
             yield return 0;
         }
 
-        Debug.Log("I have arrived at the staging area.");
+        transitCoroutine = null;
+        Debug.Log("<i>I have arrived at the staging area.</i>");
+    }
+
+    //--------------------------------------------------
+    // Events and Messages
+    //--------------------------------------------------
+    private void OnMouseEnter()
+    {
+        SelectionController.UpdateHover(this, true);
+    }
+
+    private void OnMouseExit()
+    {
+        SelectionController.UpdateHover(this, false);
+    }
+
+    private void OnMouseDown()
+    {
+        Selected = SelectionController.UpdateSelected(this);
+    }
+
+    public void OnSelect()
+    {
+        transform.localScale *= 1.25f;
+        Selected = true;
+    }
+
+    public void OnDeselect()
+    {
+        transform.localScale = Vector3.one;
+        Selected = false;
     }
 }

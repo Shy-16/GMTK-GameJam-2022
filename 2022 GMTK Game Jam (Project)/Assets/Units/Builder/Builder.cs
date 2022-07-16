@@ -9,15 +9,17 @@ public class Builder : Unit
     //--------------------------------------------------
     public override Workplace Workplace { get => workplaceObj; set => table = (CraftingTable)value; }
     public CraftingTable table;
-    private IEnumerator craftCoroutine = null;
 
+    private IEnumerator craftCoroutine = null;
     private bool resourcesAvailable = false;
 
     //--------------------------------------------------
     // Initialization
     //--------------------------------------------------
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         table = (CraftingTable)Workplace;
     }
 
@@ -59,20 +61,23 @@ public class Builder : Unit
     {
         yield return new WaitForSeconds(1.0f);
 
-        while (resourcesAvailable)
+        while (atWork)
         {
-            int dieRoll = RollDie();
+            if (resourcesAvailable)
+            {
+                int dieRoll = RollDie();
 
-            for (int i = 0; i < table.productRecipe.recipe.Length; ++i)
-                ResourceManager._instance.resourceTotals[(int)table.productRecipe.recipe[i].resourceType].count -= table.productRecipe.recipe[i].count;
+                for (int i = 0; i < table.productRecipe.recipe.Length; ++i)
+                    ResourceManager._instance.resourceTotals[(int)table.productRecipe.recipe[i].resourceType].count -= table.productRecipe.recipe[i].count;
 
-            Product newProduct = new Product(table.productRecipe, dieRoll);
+                Product newProduct = new Product(table.productRecipe, dieRoll);
 
-            ProductManager._isntance.finishedProducts.Add(newProduct);
+                ProductManager._isntance.finishedProducts.Add(newProduct);
 
-            Debug.Log(string.Format("{0} product crafted.", newProduct), this);
+                Debug.Log(string.Format("<b>{0} product crafted.</b>", newProduct), this);
 
-            yield return new WaitForSecondsRealtime(1.0f);
+                yield return new WaitForSeconds(1.0f);
+            }
         }
     }
 }
