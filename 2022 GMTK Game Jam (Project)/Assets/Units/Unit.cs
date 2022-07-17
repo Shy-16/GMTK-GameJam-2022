@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
+public abstract class Unit : MonoBehaviour, I_Selectable
 {
     //--------------------------------------------------
     // Properties
@@ -10,7 +10,6 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
     public Die die;
     public virtual Workplace Workplace { get; set; }
     public bool Selected { get; set; }
-    public I_Draggable SlottedObject { get; set; }
     public LayerMask Mask { get; set; }
 
     public Workplace workplaceObj;
@@ -19,6 +18,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
 
     public bool atWork;
 
+    private Canvas worldSpaceCanvas;
     private IEnumerator transitCoroutine = null;
     private float speed = 0.02f;
 
@@ -27,6 +27,9 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
     //--------------------------------------------------
     protected virtual void Start()
     {
+        worldSpaceCanvas = GetComponentInChildren<Canvas>();
+        worldSpaceCanvas.worldCamera = Camera.main;
+
         Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
         //Debug.Log(Mask.value, this);
     }
@@ -77,7 +80,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
 
     protected IEnumerator GoToWorkplace()
     {
-        Debug.Log("<i>I am leaving for work</i>");
+        //Debug.Log("<i>I am leaving for work</i>");
 
         while (!atWork)
         {
@@ -89,13 +92,13 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
             yield return 0;
         }
 
-        Debug.Log("<i>I have arrived at work.</i>", this);
+        //Debug.Log("<i>I have arrived at work.</i>", this);
     }
 
     protected IEnumerator LeaveWorkplace()
     {
         atWork = false;
-        Debug.Log("<i>I am leaving work.</i>", this);
+        //Debug.Log("<i>I am leaving work.</i>", this);
 
         while (Vector2.Distance(stagingLocation, transform.position) > 0)
         {
@@ -105,7 +108,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable, I_Slottable
         }
 
         transitCoroutine = null;
-        Debug.Log("<i>I have arrived at the staging area.</i>");
+        //Debug.Log("<i>I have arrived at the staging area.</i>");
     }
 
     //--------------------------------------------------

@@ -15,7 +15,7 @@ public class SelectionController : MonoBehaviour
     public LayerMask selectableLayer;
     public LayerMask uiLayer;
 
-    public bool holding = false;
+    public static bool holding = false;
 
     //--------------------------------------------------
     // Update
@@ -46,26 +46,26 @@ public class SelectionController : MonoBehaviour
             if (newHover != null)
             {
                 hoveredItems.Add(newHover);
-                //Debug.Log(string.Format("{0} is being hovered.", newHover));
+                Debug.Log(string.Format("{0} is being hovered.", newHover));
             }
             else
             {
-                //Debug.LogError("Tried to Push a null object onto Hover Stack");
+                Debug.LogError("Tried to Push a null object onto Hover Stack");
                 return false;
             }
         }
         else if (!adding && hoveredItems.Contains(newHover))
         {
             hoveredItems.Remove(newHover);
-            //Debug.Log(string.Format("{0} is no longer being hovered.", newHover));
+            Debug.Log(string.Format("{0} is no longer being hovered.", newHover));
         }
 
         return true;
     }
 
-    public static bool UpdateSelected(I_Selectable newSelection)
+    public static bool UpdateSelected(I_Selectable newSelection, bool selecting = true)
     {
-        if (newSelection != selectedItem)
+        if (selecting && newSelection != selectedItem)
         {
             //----------DEBUG----------
             //var strBuilder = new StringBuilder();
@@ -115,6 +115,16 @@ public class SelectionController : MonoBehaviour
 
             selectedItem = highestPriority;
             selectedItem.OnSelect();
+        }
+        else if (!selecting)
+        {
+            if (selectedItem == newSelection)
+                selectedItem = null;
+
+            if (holding)
+                holding = false;
+
+            newSelection.OnDeselect();
         }
 
         //Debug.Log(string.Format("{0} is now selected", selectedItem));

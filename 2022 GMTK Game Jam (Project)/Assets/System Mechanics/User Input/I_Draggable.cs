@@ -6,5 +6,6 @@ public interface I_Draggable : I_Selectable
 {
     bool Held { get; set; }
     I_Slottable ParentSlot { get; set; }
-    I_Slottable SlotHovered { get; set; }
+    GameObject ParentSlotObj { get; set; }
+    LayerMask SlotMask { get; set; }
 }

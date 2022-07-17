@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Die : MonoBehaviour
+public class Die : MonoBehaviour, I_Draggable
 {
     //--------------------------------------------------
     // Properties
@@ -12,12 +13,39 @@ public class Die : MonoBehaviour
 
     public bool assigned = false;
 
+    public bool Selected { get; set; }
+    public bool Held { get; set; }
+    public I_Slottable ParentSlot { get; set; }
+    public GameObject ParentSlotObj { get; set; }
+    public LayerMask Mask { get; set; }
+    public LayerMask SlotMask { get; set; }
+
+    private Canvas worldSpaceCanvas;
+    private Image imageComponent;
+
     //--------------------------------------------------
     // Initialization
     //--------------------------------------------------
     void Start()
     {
+        Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
+        SlotMask = LayerMask.GetMask("Dice Slots");
+        worldSpaceCanvas = GetComponentInChildren<Canvas>();
+        imageComponent = GetComponent<Image>();
+
+        worldSpaceCanvas.worldCamera = Camera.main;
+
+        transform.position = ParentSlotObj.transform.position;
+
         AssignDefaultfaces(ref faces, numbFaces);
+    }
+
+    //--------------------------------------------------
+    // Update
+    //--------------------------------------------------
+    void Update()
+    {
+        
     }
 
     //--------------------------------------------------
@@ -58,5 +86,74 @@ public class Die : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    //--------------------------------------------------
+    // Events and Messages
+    //--------------------------------------------------
+    private void OnMouseEnter()
+    {
+        SelectionController.UpdateHover(this, true);
+    }
+
+    private void OnMouseExit()
+    {
+        SelectionController.UpdateHover(this, false);
+    }
+
+    private void OnMouseDown()
+    {
+        Selected = SelectionController.UpdateSelected(this);
+    }
+
+    private void OnMouseDrag()
+    {
+        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 8);
+        SelectionController.holding = true;
+        Held = true;
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        Ray ray = new Ray(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+        RaycastHit hit;
+
+        Physics.Raycast(ray, out hit, 100.0f, ~SlotMask.value, QueryTriggerInteraction.Collide);
+
+        I_Slottable potentialSlot = null;
+
+        if (hit.collider != null)
+            potentialSlot = hit.transform.GetComponent<I_Slottable>();
+
+        if (potentialSlot != null && potentialSlot.SlottedDraggable == null)
+        {
+            ParentSlot = potentialSlot;
+            potentialSlot.SlottedDraggable = this;
+        }
+        else if (potentialSlot == null || potentialSlot.SlottedDraggable != null)
+        {
+            transform.position = ParentSlotObj.transform.position;
+        }
+
+#pragma warning disable CS0252
+        if (SelectionController.selectedItem == this)
+        {
+            SelectionController.holding = false;
+            SelectionController.UpdateSelected(this, false);
+        }
+#pragma warning restore CS0252
+    }
+
+    public void OnSelect()
+    {
+        transform.localScale *= 1.25f;
+        Selected = true;
+    }
+
+    public void OnDeselect()
+    {
+        transform.localScale = Vector3.one;
+        Selected = false;
+        Held = false;
     }
 }
