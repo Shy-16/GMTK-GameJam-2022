@@ -8,6 +8,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable
     // Properties
     //--------------------------------------------------
     public Die die;
+    public DieSlot slot;
     public virtual Workplace Workplace { get; set; }
     public bool Selected { get; set; }
     public LayerMask Mask { get; set; }
@@ -33,7 +34,6 @@ public abstract class Unit : MonoBehaviour, I_Selectable
         Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
         //Debug.Log(Mask.value, this);
     }
-
 
     //--------------------------------------------------
     // Updates
@@ -84,7 +84,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable
 
         while (!atWork)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Workplace.transform.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, Workplace.transform.position - Vector3.forward, speed);
 
             if (Vector2.Distance(Workplace.transform.position, transform.position) <= 0.5f)
                 atWork = true;
@@ -102,7 +102,7 @@ public abstract class Unit : MonoBehaviour, I_Selectable
 
         while (Vector2.Distance(stagingLocation, transform.position) > 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, stagingLocation, speed);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(stagingLocation.x, stagingLocation.y, 0) - Vector3.forward, speed);
 
             yield return 0;
         }

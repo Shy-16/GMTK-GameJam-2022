@@ -43,9 +43,10 @@ public class Die : MonoBehaviour, I_Draggable
     //--------------------------------------------------
     // Update
     //--------------------------------------------------
-    void Update()
+    private void Update()
     {
-        
+        if (ParentSlotObj != null && !Held)
+            transform.position = ParentSlotObj.transform.position - Vector3.forward;
     }
 
     //--------------------------------------------------
@@ -115,10 +116,10 @@ public class Die : MonoBehaviour, I_Draggable
 
     private void OnMouseUpAsButton()
     {
-        Ray ray = new Ray(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
         RaycastHit hit;
+        Ray ray = new Ray(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
-        Physics.Raycast(ray, out hit, 100.0f, ~SlotMask.value, QueryTriggerInteraction.Collide);
+        Physics.Raycast(ray, out hit, 100.0f, SlotMask.value, QueryTriggerInteraction.Collide);
 
         I_Slottable potentialSlot = null;
 
@@ -127,12 +128,16 @@ public class Die : MonoBehaviour, I_Draggable
 
         if (potentialSlot != null && potentialSlot.SlottedDraggable == null)
         {
+            ParentSlot.UpdateSlot(false, null);
+
             ParentSlot = potentialSlot;
-            potentialSlot.SlottedDraggable = this;
+            ParentSlotObj = potentialSlot.UpdateSlot(true, gameObject);
+
+            transform.position = ParentSlotObj.transform.position - Vector3.forward;
         }
         else if (potentialSlot == null || potentialSlot.SlottedDraggable != null)
         {
-            transform.position = ParentSlotObj.transform.position;
+            transform.position = ParentSlotObj.transform.position - Vector3.forward;
         }
 
 #pragma warning disable CS0252

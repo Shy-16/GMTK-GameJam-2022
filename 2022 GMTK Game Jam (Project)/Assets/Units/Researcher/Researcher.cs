@@ -87,6 +87,8 @@ public class Researcher : Unit
 
                 yield return new WaitForSeconds(1.0f);
             }
+
+            yield return new WaitForSeconds(0.5f);
         }
 
         Debug.Log(string.Format("<b>Research for {0} has been completed.</b>", lab.currentPlan.researchObj), this);

@@ -11,11 +11,13 @@ public class SelectionController : MonoBehaviour
     //--------------------------------------------------
     public static I_Selectable selectedItem;
     public static List<I_Selectable> hoveredItems = new();
+    
+    public static bool holding = false;
 
-    public LayerMask selectableLayer;
+    public LayerMask unitLayer;
     public LayerMask uiLayer;
 
-    public static bool holding = false;
+    public DieSlot[] dieSlots = new DieSlot[3];
 
     //--------------------------------------------------
     // Update
@@ -30,9 +32,35 @@ public class SelectionController : MonoBehaviour
             //Debug.Log("Selection is now empty");
         }
 
-        if (Input.GetMouseButtonDown(1) && selectedItem != null)
+        if (Input.GetMouseButtonDown(1) && hoveredItems.Count > 0)
         {
+            RaycastHit hit;
+            Unit unit = null;
+            Ray ray = new Ray(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
+            Physics.Raycast(ray, out hit, 100.0f, unitLayer.value, QueryTriggerInteraction.Collide);
+
+            if (hit.collider != null)
+                unit = hit.transform.GetComponent<Unit>();
+            
+            if (unit != null)
+            {
+                for (int i = 0; i < dieSlots.Length; ++i)
+                {
+                    if (dieSlots[i].slottedObj == null)
+                    {
+                        Die die = unit.die;
+
+                        unit.die = null;
+
+                        die.ParentSlot = dieSlots[i];
+                        die.ParentSlotObj = dieSlots[i].gameObject;
+                        die.transform.position = die.ParentSlotObj.transform.position - Vector3.forward;
+
+                        dieSlots[i].UpdateSlot(true, die.gameObject);
+                    }
+                }
+            }
         }
     }
 

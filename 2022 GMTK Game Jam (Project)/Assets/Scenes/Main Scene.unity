@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809618504}
   - component: {fileID: 809618505}
+  - component: {fileID: 809618506}
   m_Layer: 7
   m_Name: Dice Tray Slot 2
   m_TagString: Untagged
@@ -719,6 +720,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slottedObj: {fileID: 1956503268}
+  unit: {fileID: 0}
+--- !u!65 &809618506
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809618503}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 108, y: 108, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &842699400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1038,7 @@ GameObject:
   - component: {fileID: 1474906605}
   - component: {fileID: 1474906606}
   m_Layer: 0
-  m_Name: Unit Controller
+  m_Name: Selection Manager
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1056,12 +1071,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d0ef546d12bdb46af1200ca3afcc00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectableLayer:
+  unitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 640
   uiLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 160
+  dieSlots:
+  - {fileID: 2131679370}
+  - {fileID: 809618505}
+  - {fileID: 1979473236}
 --- !u!1001 &1624945516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1428,6 +1447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1979473235}
   - component: {fileID: 1979473236}
+  - component: {fileID: 1979473237}
   m_Layer: 7
   m_Name: Dice Tray Slot 3
   m_TagString: Untagged
@@ -1468,6 +1488,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slottedObj: {fileID: 1624945517}
+  unit: {fileID: 0}
+--- !u!65 &1979473237
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979473234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 108, y: 108, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2007044704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,6 +1599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2131679369}
   - component: {fileID: 2131679370}
+  - component: {fileID: 2131679371}
   m_Layer: 7
   m_Name: Dice Tray Slot 1
   m_TagString: Untagged
@@ -1605,6 +1640,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slottedObj: {fileID: 242628536}
+  unit: {fileID: 0}
+--- !u!65 &2131679371
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131679368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 108, y: 108, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2137923101
 PrefabInstance:
   m_ObjectHideFlags: 0
