@@ -46,6 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2e92631b63a3d42bb278608010d841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faceSprites:
+  - {fileID: 1225616942, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
+  - {fileID: -1730602419, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
+  - {fileID: -281668348, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
+  - {fileID: -496172888, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
+  - {fileID: 1299588772, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
+  - {fileID: -702899829, guid: 7569b63d393732f408a3305d74a9ebd5, type: 3}
   numbFaces: 4
   faces: 
   assigned: 0

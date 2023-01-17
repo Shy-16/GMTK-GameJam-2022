@@ -75,12 +75,12 @@ public class Researcher : Unit
 
                 // Don't go above 100% research
                 for (int i = 0; i < lab.currentPlan.requiredResources.Length; ++i)
-                    ResourceManager._instance.resourceTotals[(int)lab.currentPlan.requiredResources[i].resourceType].count -= lab.currentPlan.requiredResources[i].count;
+                    ResourceManager._instance.SubtractResources(lab.currentPlan.requiredResources[i].resourceType, lab.currentPlan.requiredResources[i].count);
 
                 lab.researchPoints += dieRoll;
 
                 // these casts aren't redunant; vs and unity disagree about this
-                lab.progressRatio = (float)lab.researchPoints / (float)lab.currentPlan.requiredResearchPoints;
+                lab.UpdateProgress((float)lab.researchPoints / (float)lab.currentPlan.requiredResearchPoints);
 
                 Debug.Log(string.Format("Research Points: {0}", lab.researchPoints), this);
                 Debug.Log(string.Format("Research Progress: {0}%", lab.progressRatio * 100), this);

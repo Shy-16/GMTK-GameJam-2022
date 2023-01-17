@@ -13,7 +13,7 @@ public abstract class Workplace : MonoBehaviour, I_Selectable
     //--------------------------------------------------
     // Initializations
     //--------------------------------------------------
-    void Start()
+    protected virtual void Start()
     {
         Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
         //Debug.Log(Mask.value, this);

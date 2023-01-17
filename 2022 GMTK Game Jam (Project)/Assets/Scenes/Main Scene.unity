@@ -183,6 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53041a6f273e3df42ab618d2ebfdddd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceTexts:
+  - {fileID: 1024513801}
+  - {fileID: 1974136227}
+  - {fileID: 1938535720}
   resourceTotals:
   - resourceType: 0
     count: 0
@@ -1028,6 +1032,14 @@ PrefabInstance:
       propertyPath: allPlans.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 026ab01c0e0711b4b961c1ccf0142359, type: 2}
+    - target: {fileID: 976517239092523717, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 976517239092523717, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2653809778064574169, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
       propertyPath: m_Name
       value: R&D Office
@@ -1076,6 +1088,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7002677347245335350, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002677347245335350, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002677347245335350, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670540841464515020, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: eec18211bf59afe4fbbedb44baa29c01, type: 3}

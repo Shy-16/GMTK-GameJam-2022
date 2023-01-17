@@ -68,7 +68,7 @@ public class Builder : Unit
                 int dieRoll = RollDie();
 
                 for (int i = 0; i < table.productRecipe.recipe.Length; ++i)
-                    ResourceManager._instance.resourceTotals[(int)table.productRecipe.recipe[i].resourceType].count -= table.productRecipe.recipe[i].count;
+                    ResourceManager._instance.SubtractResources(table.productRecipe.recipe[i].resourceType, table.productRecipe.recipe[i].count);
 
                 Product newProduct = new Product(table.productRecipe, dieRoll);
 

@@ -7,8 +7,8 @@ public class Harvester : Unit
     //--------------------------------------------------
     // Properties
     //--------------------------------------------------
-    public override Workplace Workplace { get => workplaceObj; set => vein = (BagOfHolding)value; }
-    public BagOfHolding vein;
+    public override Workplace Workplace { get => workplaceObj; set => bag = (BagOfHolding)value; }
+    public BagOfHolding bag;
 
     private IEnumerator harvestCoroutine = null;
 
@@ -19,7 +19,7 @@ public class Harvester : Unit
     {
         base.Start();
 
-        vein = (BagOfHolding)Workplace;
+        bag = (BagOfHolding)Workplace;
     }
 
     //--------------------------------------------------
@@ -50,16 +50,16 @@ public class Harvester : Unit
 
         while (atWork)
         {
-            if (vein.resourcesRemaining > 0 && die != null && !die.Held)
+            if (bag.resourcesRemaining > 0 && die != null && !die.Held)
             {
                 int dieRoll = RollDie();
 
                 // Prevent accidentally sending remaining resources in a mine to below 0
-                if (vein.resourcesRemaining < dieRoll)
-                    dieRoll = vein.resourcesRemaining;
+                if (bag.resourcesRemaining < dieRoll)
+                    dieRoll = bag.resourcesRemaining;
 
-                ResourceManager._instance.resourceTotals[(int)vein.resourceType].count += dieRoll;
-                vein.resourcesRemaining -= dieRoll;
+                ResourceManager._instance.AddResources(bag.resourceType, dieRoll);
+                bag.resourcesRemaining -= dieRoll;
 
                 Debug.Log(string.Format("{0} resources harvested.", dieRoll), this);
             }

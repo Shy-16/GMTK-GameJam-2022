@@ -8,8 +8,9 @@ public class Die : MonoBehaviour, I_Draggable
     //--------------------------------------------------
     // Properties
     //--------------------------------------------------
-    public int numbFaces;
+    public Sprite[] faceSprites;
     public int[] faces;
+    public int lastResult;
 
     public bool assigned = false;
 
@@ -31,13 +32,13 @@ public class Die : MonoBehaviour, I_Draggable
         Mask = LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
         SlotMask = LayerMask.GetMask("Dice Slots");
         worldSpaceCanvas = GetComponentInChildren<Canvas>();
-        imageComponent = GetComponent<Image>();
+        imageComponent = GetComponentInChildren<Image>();
 
         worldSpaceCanvas.worldCamera = Camera.main;
 
         transform.position = ParentSlotObj.transform.position;
 
-        AssignDefaultfaces(ref faces, numbFaces);
+        AssignDefaultfaces(ref faces, faceSprites.Length);
     }
 
     //--------------------------------------------------
@@ -52,6 +53,13 @@ public class Die : MonoBehaviour, I_Draggable
     //--------------------------------------------------
     // Methods
     //--------------------------------------------------
+    public int Roll()
+    {
+        lastResult = Random.Range(faces[0], faces[faceSprites.Length - 1] + 1);
+        imageComponent.sprite = faceSprites[lastResult - 1];
+        return lastResult;
+    }
+
     private void AssignDefaultfaces(ref int[] facesArray, int numbOfFaces)
     {
         switch (numbOfFaces)
