@@ -12,6 +12,8 @@ public class DieSlot : MonoBehaviour, I_Slottable
     public GameObject slottedObj;
     public Unit unit;
 
+    private Coroutine shakeRoutine;
+
     //--------------------------------------------------
     // Update
     //--------------------------------------------------
@@ -62,4 +64,36 @@ public class DieSlot : MonoBehaviour, I_Slottable
 
         return null;
     }
+
+    public void Shake()
+    {
+        if (shakeRoutine != null)
+        {
+            StopCoroutine(shakeRoutine);
+            shakeRoutine = null;
+        }
+
+        shakeRoutine = StartCoroutine(ShakeCoroutine());
+    }
+
+    private IEnumerator ShakeCoroutine()
+    {
+        int i = 0;
+        float shakeMagnitudeScalar = 1f;
+        float shakeDecayRate = 0.5f;
+
+        Vector2 newOffset;
+
+        while (shakeMagnitudeScalar >= 0.01f)
+        {
+            newOffset = Random.insideUnitCircle;
+            transform.localPosition = (newOffset * shakeMagnitudeScalar) / 2;
+            
+            i++;
+            shakeMagnitudeScalar = Mathf.Pow(shakeDecayRate, i);
+            yield return new WaitForSeconds(0.025f);
+        }
+        
+        Debug.Log("Coroutine Over");
+    }    
 }

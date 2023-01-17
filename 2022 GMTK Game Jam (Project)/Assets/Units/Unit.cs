@@ -28,6 +28,8 @@ public abstract class Unit : MonoBehaviour, I_Selectable
     //--------------------------------------------------
     protected virtual void Start()
     {
+        slot = GetComponentInChildren<DieSlot>();
+
         worldSpaceCanvas = GetComponentInChildren<Canvas>();
         worldSpaceCanvas.worldCamera = Camera.main;
 
@@ -73,6 +75,8 @@ public abstract class Unit : MonoBehaviour, I_Selectable
     //--------------------------------------------------
     protected int RollDie()
     {
+        slot.Shake();
+
         // The -1 is to get the correct index within the faces array. An upgraded die might not have what you expect at this index
         // The +1 to the random range is to include the highest value on the die
         return Random.Range(die.faces[0], die.faces[die.numbFaces - 1] + 1);

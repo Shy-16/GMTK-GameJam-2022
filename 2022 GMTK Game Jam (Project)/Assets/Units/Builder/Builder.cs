@@ -63,7 +63,7 @@ public class Builder : Unit
 
         while (atWork)
         {
-            if (resourcesAvailable)
+            if (resourcesAvailable && die != null && !die.Held)
             {
                 int dieRoll = RollDie();
 
@@ -75,11 +75,9 @@ public class Builder : Unit
                 ProductManager._isntance.finishedProducts.Add(newProduct);
 
                 Debug.Log(string.Format("<b>{0} product crafted.</b>", newProduct), this);
-
-                yield return new WaitForSeconds(1.0f);
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

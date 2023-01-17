@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
-
 public enum ResourceType
 {
-    Cotton,
-    Coal,
-    Gemstone,
-    Glass,
-    MetalOre,
+    Canvas,
+    Glue,
+    Hole,
     Metal,
-    Oil,
-    Plastic,
-    Sand,
+    Nitroglycerin,
+    OldBoot,
+    Paint,
+    Wheel,
     Wood
 }
 
@@ -29,7 +28,7 @@ public class ResourceManager : MonoBehaviour
     //--------------------------------------------------
     public static ResourceManager _instance;
     public IngredientLine[] resourceTotals = new IngredientLine[10];
-
+    
     //--------------------------------------------------
     // Initialization
     //--------------------------------------------------

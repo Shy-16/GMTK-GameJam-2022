@@ -63,7 +63,7 @@ public class Researcher : Unit
 
         while (atWork)
         {
-            if (resourcesAvailable)
+            if (resourcesAvailable && die != null && !die.Held)
             {
                 if (lab.progressRatio >= 1)
                     break;
@@ -84,11 +84,9 @@ public class Researcher : Unit
 
                 Debug.Log(string.Format("Research Points: {0}", lab.researchPoints), this);
                 Debug.Log(string.Format("Research Progress: {0}%", lab.progressRatio * 100), this);
-
-                yield return new WaitForSeconds(1.0f);
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.0f);
         }
 
         Debug.Log(string.Format("<b>Research for {0} has been completed.</b>", lab.currentPlan.researchObj), this);
